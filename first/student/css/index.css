@@ -1,0 +1,22 @@
+a{
+    text-decoration: none;
+}
+table{
+    text-align:center;
+}
+table th{
+    text-align:center;
+}
+.container{
+    margin-top: 50px;
+}
+.a-add{
+    width:100px;
+    /*float:right;*/
+    /*margin-right:10px;*/
+    display:block;
+    margin:10px auto;
+}
+.add{
+    width:100px;
+}
