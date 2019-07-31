@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background: #141414;
+    user-select: none;
+}
+
+#header {
+    width: 94%;
+    height: 74px;
+    padding: 0 3%;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    background: url(../img/logo.png) no-repeat center/100%;
+}
+.chaBox {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    margin-top: 10px;
+    margin-right: -8px;
+    cursor: pointer;
+}
+
+.chaBox .gang1 {
+    width: 20px;
+    height: 2px;
+    background: white;
+    position: absolute;
+    top: 18px;
+    left: 15px;
+    transition: all 0.3s;
+}
+
+.chaBox .gang2 {
+    width: 20px;
+    height: 2px;
+    background: white;
+    position: absolute;
+    top: 28px;
+    left: 15px;
+    transition: all 0.3s;
+}
+
+#rightbox {
+    width: 460px;
+    height: 100%;
+    background: #000;
+    position: fixed;
+    top: 0;
+    right:-460px;
+    z-index: 1000;
+}
+.topBox {
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+
+.chaBox1 {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.chaBox1 .gang11 {
+    width: 20px;
+    height: 2px;
+    background: white;
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    transform: rotate(-45deg);
+}
+
+.chaBox1 .gang21 {
+    width: 20px;
+    height: 2px;
+    background: white;
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    transform: rotate(45deg);
+}
+
+#rightbox ul {
+    width: 100%;
+    height: 400px;
+}
+
+#rightbox ul li {
+    width: 100%;
+    height: 20%;
+    padding: 0 50px 0 66px;
+    box-sizing: border-box;
+    font-size: 30px;
+    line-height: 80px;
+}
+
+#rightbox ul li span {
+    color: #7b7b7b;
+}
+
+#rightbox ul li .hot {
+    color: #fff;
+}
+
+#rightbox ul li:hover span {
+    color: #fff;
+}

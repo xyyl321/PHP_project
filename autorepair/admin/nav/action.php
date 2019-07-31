@@ -13,7 +13,7 @@ switch($type){
         $dataName=$resName->fetch_all(MYSQLI_ASSOC);
         if(!$dataName){
             // 检测 URL 地址是否合法
-            if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) {
+//            if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) {
                 $sqlIn="insert into nav(name,url,sort) values('$name','$url','$sort')";
                 $resIn=$mysql->query($sqlIn);
                 if($resIn){
@@ -27,12 +27,12 @@ switch($type){
                         'msg'=>"添加失败"
                     ];
                 }
-            }else{
-                $data=[
-                    'code'=>400,
-                    'msg'=>"请输入合法的 URL 的地址"
-                ];
-            }
+//            }else{
+//                $data=[
+//                    'code'=>400,
+//                    'msg'=>"请输入合法的 URL 的地址"
+//                ];
+//            }
         }else{
             $data=[
                 'code'=>400,
@@ -91,7 +91,7 @@ switch($type){
 //        $dataName=$resName->fetch_all(MYSQLI_ASSOC);
 //        if(!$dataName){
             // 检测 URL 地址是否合法
-            if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) {
+//            if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$url)) {
                 $sqlIn="update nav set name='$name',url='$url',sort='$sort'where id='$id'";
                 $resIn=$mysql->query($sqlIn);
                 if($resIn){
@@ -105,12 +105,12 @@ switch($type){
                         'msg'=>"修改失败"
                     ];
                 }
-            }else{
-                $data=[
-                    'code'=>400,
-                    'msg'=>"请输入合法的 URL 的地址"
-                ];
-            }
+//            }else{
+//                $data=[
+//                    'code'=>400,
+//                    'msg'=>"请输入合法的 URL 的地址"
+//                ];
+//            }
 //        }else{
 //            $data=[
 //                'code'=>400,

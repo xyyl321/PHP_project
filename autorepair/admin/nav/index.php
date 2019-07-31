@@ -32,21 +32,21 @@
 <!--添加-->
 <form action="" class="layui-form" id="addNav">
     <div class="layui-form-item">
-        <label class="layui-form-label" for="username">名称</label>
+        <label class="layui-form-label" for="username">导航名称</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="username" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            <input type="text" name="username" required  lay-verify="required" placeholder="请输入导航名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label" for="site">地址</label>
+        <label class="layui-form-label" for="site">模板项目</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="site" required  lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+            <input type="text" name="site" required  lay-verify="required" placeholder="请输入模板项目" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label" for="sorting">排序</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="sorting" required  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+            <input type="text" name="sorting" required  lay-verify="required" placeholder="请输入序号" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -61,21 +61,21 @@
 <form action="" class="layui-form" id="editNav">
     <input type="hidden" name="id" id="sortId">
     <div class="layui-form-item">
-        <label class="layui-form-label" for="username">名称</label>
+        <label class="layui-form-label" for="username">导航名称</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="username" id="username" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            <input type="text" name="username" id="username" required  lay-verify="required" placeholder="请输入导航名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label" for="site">地址</label>
+        <label class="layui-form-label" for="site">模板项目</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="site" id="site" required  lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+            <input type="text" name="site" id="site" required  lay-verify="required" placeholder="请输入模板项目" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label" for="sorting">排序</label>
         <div class="layui-input-block inputs">
-            <input type="text" name="sorting" id="sorting" required  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+            <input type="text" name="sorting" id="sorting" required  lay-verify="required" placeholder="请输入序号" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -109,12 +109,12 @@
             elem: "#tableNav",
             url: 'action.php?type=find',
             page:true,
-            limit:5,
-            limits:[5,10,15,20],
+            limit:10,
+            limits:[10,20,30,40],
             cols: [[
                 {field:'id',title:'ID',width:100},
                 {field:'name',title:'导航名称',width:150},
-                {field:'url',title:'跳转地址',width:500},
+                {field:'url',title:'模板项目',width:500},
                 {field:'sort',title:'排序',width:100,sort:true,templet:function(d){
                         return `<input type="text" name="sorts" value="${d.sort}"onchange="sorting(${d.id},this)" style="width:50px"/>`
                     }},

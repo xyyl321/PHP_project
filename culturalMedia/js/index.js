@@ -4,7 +4,7 @@ $(function () {
             $(".chaBox .gang1").css({
                 top: '25px',
                 transform: 'rotate(-45deg)',
-            })
+            });
             $(".chaBox .gang2").css({
                 top: '25px',
                 transform: 'rotate(45deg)',

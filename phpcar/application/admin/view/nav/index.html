@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航管理-展示</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+
+<style>
+    #editNav{
+        padding-top:30px;
+        display:none;
+    }
+    .layui-input{
+        width:80%;
+    }
+</style>
+
+<body>
+
+    <div style="padding: 15px;">
+
+        <form action="" class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">导航名称</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="name" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">模板项目</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="site" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="sort" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="search" style="width:100px;">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <table id="tableNav"></table>
+
+        <script id="caozuo" type="text/html">
+            <button type="button" class="layui-btn layui-btn-sm" onclick="edits({{d.id}})">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="dels({{d.id}})">
+                <i class="layui-icon">&#xe640;</i>
+            </button>
+        </script>
+
+    </div>
+
+    <!--编辑-->
+    <form action="" class="layui-form" id="editNav">
+        <input type="hidden" name="id" id="sortId">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="username">导航名称</label>
+            <div class="layui-input-block inputs">
+                <input type="text" name="username" id="username" required  lay-verify="required" placeholder="请输入导航名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="site">模板项目</label>
+            <div class="layui-input-block inputs">
+                <input type="text" name="site" id="site" required  lay-verify="required" placeholder="请输入模板项目" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="sorting">排序</label>
+            <div class="layui-input-block inputs">
+                <input type="text" name="sorting" id="sorting" required  lay-verify="required" placeholder="请输入序号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="editDemo">立即修改</button>
+                <button type="button" class="layui-btn layui-btn-primary cancle">取消</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+<script src="/static/admin/jquery/js/jquery-3.4.1.min.js"></script>
+<script src="/static/admin/jquery/js/jquery.validate.min.js"></script>
+<script>
+
+    var layer,table,form,$;
+    layui.use(['element','jquery','table','form'],function(){
+        var element = layui.element;
+        $ = layui.jquery;
+        table = layui.table;
+        layer = layui.layer;
+        form =layui.form;
+
+        // 数据渲染
+        let tableIns=table.render({
+            elem: "#tableNav",
+            url: '/admin/nav/find',
+            limit:5,
+            limits:[5,10,15,20,25],
+            page:true,
+            cols: [[
+                {field:'id',title:'ID',width:100},
+                {field:'name',title:'导航名称',width:150},
+                {field:'url',title:'模板项目',width:480},
+                {field:'sort',title:'排序',width:100,templet:function(d){
+                        return `<input type="text" name="sorts" value="${d.sort}"onchange="sorting(${d.id},this)" style="width:50px"/>`
+                    }},
+                {title:'操作',templet:'#caozuo'}
+            ]]
+        });
+        // 搜索查询
+        form.on('submit(search)',function(data){
+            let qs=data.field;
+            tableIns.reload({
+                where: qs,
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        });
+        // 编辑->点击修改
+        form.on('submit(editDemo)',function(data){
+            $.post("/admin/nav/edit",data.field,function(res){
+                if(res.code===200){
+                    layer.msg(res.msg,{icon:6});
+                    layer.close(editIndex);
+                    table.reload('tableNav',{
+                        url:'/admin/nav/find'
+                    })
+                }else{
+                    layer.msg(res.msg,{icon:5})
+                }
+            });
+            return false;
+        });
+    });
+
+    // 编辑->弹出框
+    let editIndex;
+    function edits(id){
+        editIndex=layer.open({
+            type:1,
+            title:'修改导航项',
+            skin:'layui-layer-molv',
+            area:['500px','350px'],
+            content:$('#editNav')
+        });
+        $.get("/admin/nav/select",{id:id},function(res){
+            $("#sortId").val(res.id);
+            $("#username").val(res.name);
+            $("#site").val(res.url);
+            $("#sorting").val(res.sort);
+        })
+    }
+    // 编辑->点击取消
+    $(".cancle").click(function(){
+        layer.close(editIndex);
+    });
+    // 删除
+    function dels(id){
+        layer.confirm('您确定要删除吗？', {
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn: ['确定','取消']
+        }, function(){
+            $.get('/admin/nav/delete',{id:id},function(res){
+                if(res.code===200){
+                    layer.close();
+                    layer.msg(res.msg,{icon:1,time:800});
+                    table.reload('tableNav',{
+                        url:'/admin/nav/find'
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:2,time:1000});
+                }
+            })
+        }, function(){
+            layer.close();
+        });
+    }
+    // 排序
+    function sorting(id,obj){
+        let val=$(obj).val();
+        $.get("/admin/nav/sort",{id:id, val:val},function(res){
+            if(res.code===200){
+                layer.msg(res.msg,{icon:1,time:800});
+                table.reload('tableNav',{
+                    url:'/admin/nav/find',
+                    page: {
+                        curr: 1
+                    }
+                });
+            }else{
+                layer.msg(res.msg,{icon:2,time:1000});
+            }
+        })
+    }
+
+</script>

@@ -1,0 +1,73 @@
+@import "public.css";
+
+.proBox{
+    width:100%;
+    height:auto;
+    margin-bottom:40px;
+    overflow:hidden;
+}
+.proBox .proTop{
+    width:100%;
+    height:61px;
+    padding-left:30px;
+    box-sizing:border-box;
+    line-height:61px;
+}
+.proBox .proTop span{
+    height:21px;
+    border-bottom:1px dotted transparent;
+    font-size:16px;
+    line-height:21px;
+    color:#f0443a;
+    margin-right:10px;
+    cursor:pointer;
+}
+.proBox .proTop span:hover{
+    border-bottom:1px dotted #f0443a;
+}
+.proBox .proBottom{
+    width:100%;
+    height:528px;
+    position:relative;
+}
+.proBox .proBottom .selectCard{
+    width:100%;
+    height:auto;
+    padding-left: 40px;
+    box-sizing:border-box;
+    position:absolute;
+    top:0;
+    display:none;
+}
+.proBox .proBottom a{
+    display:block;
+    width:214px;
+    height:264px;
+    float:left;
+    margin-right:30px;
+}
+.proBox .proBottom a.a1{
+    float:none;
+}
+.proBox .proBottom a .imgBorder{
+    width:200px;
+    height:200px;
+    padding:6px;
+    border:1px solid #CBCBCB;
+}
+.proBox .proBottom a .imgBorder img{
+    width:200px;
+    height:200px;
+}
+.proBox .proBottom a .text{
+    width:100%;
+    height:50px;
+    line-height:50px;
+    text-align:center;
+    font-size:15px;
+    font-weight:bold;
+    color:#373a41;
+}
+.proBox .proBottom a:hover .text{
+    color:#EF4339;
+}

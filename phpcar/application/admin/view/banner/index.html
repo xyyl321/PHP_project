@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图管理-展示</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+
+<style>
+    #editBan{
+        padding-top:30px;
+        display:none;
+    }
+    .layui-input{
+        width:80%;
+    }
+    .layui-table-cell{
+        height:50px;
+        line-height:50px;
+    }
+</style>
+
+<body>
+
+<div style="padding: 15px;">
+
+    <form action="" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" name="id" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" name="sort" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="search" style="width:100px;">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table id="tableBan"></table>
+
+    <script id="caozuo" type="text/html">
+        <button type="button" class="layui-btn layui-btn-sm" onclick="edits({{d.id}})">
+            <i class="layui-icon">&#xe642;</i>
+        </button>
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="dels({{d.id}})">
+            <i class="layui-icon">&#xe640;</i>
+        </button>
+        <!--<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-id="{{d.id}}" id="delbtn">-->
+        <!--<i class="layui-icon">&#xe640;</i>-->
+        <!--</button>-->
+    </script>
+
+</div>
+
+<!--编辑-->
+<form action="" class="layui-form" id="editBan">
+    <input type="hidden" name="id" id="sortId">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传图片</label>
+        <div class="layui-input-block inputs">
+            <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>上传图片</button>
+            <span class="layui-word-aux">图片最佳尺寸：1920*800；图片最大不能超过500kb</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="img" id="imgup">
+        <div class="layui-input-block inputs">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="height:150px;width:80%;">
+                <img id="imgurl" src="" alt="" style="height:150px;">
+            </blockquote>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block inputs">
+            <input type="text" name="sort" id="sort" required  lay-verify="required|number" placeholder="请输入序号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="editDemo">立即修改</button>
+            <button type="button" class="layui-btn layui-btn-primary cancle">取消</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
+<script src="/static/admin/jquery/js/jquery-3.4.1.min.js"></script>
+<script src="/static/admin/jquery/js/jquery.validate.min.js"></script>
+<script>
+
+    var layer,table,form,upload;
+    layui.use(['element','table','form','upload'],function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+        table = layui.table;
+        layer = layui.layer;
+        form =layui.form;
+        upload=layui.upload;
+
+        // 数据渲染
+        let tableIns=table.render({
+            elem: "#tableBan",
+            url: '/admin/banner/find',
+            limit:4,
+            limits:[4,8,12,16,20],
+            page:true,
+            cols: [[
+                {field:'id',title:'ID',height:20},
+                {field:'img',title:'轮播缩略图',templet:function(d){
+                    return `<img src="${d.img}">`
+                }},
+                {field:'sort',title:'排序',templet:function(d){
+                        return `<input type="text" name="sorts" value="${d.sort}"onchange="sorting(${d.id},this)" style="width:50px"/>`
+                    }},
+                {title:'操作',templet:'#caozuo'}
+            ]]
+        });
+
+        // 搜索查询
+        form.on('submit(search)',function(data){
+            tableIns.reload({
+                where: data.field
+                ,page: {
+                    curr: 1
+                }
+            });
+            return false;
+        });
+
+        // 编辑
+        form.on('submit(editDemo)',function(data){
+            // console.log(data.field);
+            $.post("/admin/banner/edit",data.field,function(res){
+                if(res.code===200){
+                    layer.msg(res.msg,{icon:6});
+                    layer.close(editIndex);
+                    table.reload('tableBan',{
+                        url:'/admin/banner/find'
+                    })
+                }else{
+                    layer.msg(res.msg,{icon:5})
+                }
+            });
+            return false;
+        });
+
+        // 上传图片
+        upload.render({
+            elem: '#upload',
+            url: '/admin/upload/index',
+            accept: 'images',
+            acceptMime: 'image/*',
+            size: 500,
+            done: function (res) {
+                let {code, msg, src} = res;
+                if (code == 200) {
+                    layer.msg(msg, {icon: 6});
+                    $('#imgup').val(src);
+                    $('#imgurl').attr('src', src);
+                } else {
+                    layer.msg(msg, {icon: 5})
+                }
+            }
+        });
+
+        // 删除
+//        $('.layui-table').on('click','#delbtn',function(){
+//            let othis=$(this);
+//            let id=othis.data('id');
+//            console.log(id);
+//            layer.confirm('您确定要删除吗？', {
+//                title:'删除',
+//                skin:'layui-layer-molv',
+//                btn: ['确定','取消'] //按钮
+//            }, function(){
+//                $.get('/admin/banner/delete',{id:id},function(res){
+//                    if(res.code===200){
+//                        layer.close();
+//                        layer.msg(res.msg,{icon:1,time:800});
+//                        table.reload('tableBan',{
+//                            url:'/admin/banner/find'
+//                        });
+//                    }else{
+//                        layer.msg(res.msg,{icon:2,time:1000});
+//                    }
+//                })
+//            }, function(){
+//                layer.close();
+//            });
+//        });
+    });
+
+    // 删除
+    function dels(id){
+        layer.confirm('您确定要删除吗？', {
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.get('/admin/banner/delete',{id:id},function(res){
+                if(res.code===200){
+                    layer.close();
+                    layer.msg(res.msg,{icon:1,time:800});
+                    table.reload('tableBan',{
+                        url:'/admin/banner/find'
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:2,time:1000});
+                }
+            })
+        }, function(){
+            layer.close();
+        });
+    }
+
+    // 编辑
+    let editIndex;
+    function edits(id){
+        editIndex=layer.open({
+            type:1,
+            title:'修改轮播图',
+            skin:'layui-layer-molv',
+            area:['600px','450px'],
+            content:$('#editBan')
+        });
+        $.get("/admin/banner/select",{id:id},function(res){
+            let {id,img,sort}=res;
+            $("#sortId").val(id);
+            $("#imgup").val(img);
+            $("#imgurl").attr('src',img);
+            $("#sort").val(sort);
+        })
+    }
+
+    // 取消按钮
+    $(".cancle").click(function(){
+        layer.close(editIndex);
+    });
+
+    // 排序
+    function sorting(id,obj){
+        let val=$(obj).val();
+        $.get("/admin/banner/sort",{id:id, sort:val},function(res){
+            if(res.code===200){
+                layer.msg(res.msg,{icon:1,time:800});
+                table.reload('tableBan',{
+                    url:'/admin/banner/find',
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }else{
+                layer.msg(res.msg,{icon:2,time:1000});
+            }
+        })
+    }
+
+</script>

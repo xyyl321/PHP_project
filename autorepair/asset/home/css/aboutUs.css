@@ -1,0 +1,67 @@
+@import "public.css";
+
+.detailBox{
+    width:100%;
+    height:345px;
+    padding:30px 45px 0 25px;
+    box-sizing:border-box;
+}
+.detailBox .details{
+    width:482px;
+    height:auto;
+    float:left;
+}
+.detailBox .details p{
+    width:100%;
+    height:auto;
+    line-height:25px;
+    font-size:14px;
+    color:#3e3e3e;
+}
+.detailBox img{
+    display:block;
+    width:442px;
+    float:right;
+}
+.master{
+    width:100%;
+    height:309px;
+    padding:0 20px;
+    box-sizing:border-box;
+    margin-top:30px;
+    margin-bottom:40px;
+    display:flex;
+    justify-content:space-around;
+    /* background:red; */
+}
+.master .personOne{
+    width:236px;
+    height:100%;
+}
+.master .personOne img{
+    display:block;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    margin:0 auto;
+}
+.master .personOne .name{
+    width:100%;
+    height:35px;
+    line-height:35px;
+    text-align:center;
+    font-size:26px;
+    font-weight:bold;
+    color:#000;
+    margin-top:18px;
+}
+.master .personOne .post{
+    width:100%;
+    height:19px;
+    margin-top:10px;
+    text-align:center;
+    line-height:19px;
+    font-size:14px;
+    font-weight:bold;
+    color:#f0443a;
+}

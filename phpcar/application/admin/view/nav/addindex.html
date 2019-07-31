@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航管理-添加</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+
+<style>
+    .layui-form{
+        width:500px;
+        margin:0 auto;
+    }
+    h1{
+        text-align:center;
+        margin-bottom:20px;
+    }
+</style>
+<body>
+    <div style="padding: 15px;">
+
+        <h1>导航项添加</h1>
+        <form action="" class="layui-form layui-form-pane" id="addNav">
+            <div class="layui-form-item">
+                <label class="layui-form-label">导航名称</label>
+                <div class="layui-input-block inputs">
+                    <input type="text" name="name" required  lay-verify="required" placeholder="请输入导航名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">模板项目</label>
+                <div class="layui-input-block inputs">
+                    <input type="text" name="site" required  lay-verify="required" placeholder="请输入模板项目" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block inputs">
+                    <input type="text" name="sorting" required  lay-verify="required" placeholder="请输入序号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="addDemo">点击添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
+
+<script>
+    layui.use(['form', 'layer'], function () {
+        let {form, layer, $} = layui;
+        form.on("submit(addDemo)", function (data) {
+            let formData = data.field;
+            $.ajax({
+                url: '/admin/nav/add',
+                type: 'post',
+                dataType: 'json',
+                data: formData,
+                success: function (res) {
+                    let {code, msg} = res;
+                    if(code==200){
+                        layer.msg(msg,{icon:1,time:800});
+                        $('input[type=text]').val('');
+                    }else{
+                        layer.msg(msg,{icon:2,time:1000})
+                    }
+                }
+            });
+            return false;
+        })
+    });
+</script>

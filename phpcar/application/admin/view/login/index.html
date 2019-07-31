@@ -1,0 +1,131 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>味多美管里系统</title>
+    <!--    模板输出替换-->
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+
+<style>
+    .boxbg{
+        width:100%;
+        height:100%;
+        background-image: url("/static/admin/images/img/login_bg.png");
+        background-size:100%;
+        background-position-y: -100px;
+        position: relative;
+    }
+    .title{
+        width:400px;
+        font-size:24px;
+        text-align: center;
+        color:#fff;
+        position:absolute;
+        left: 0;
+        right: 0;
+        margin:0 auto;
+        top:150px;
+    }
+    .boxs{
+        width:400px;
+        height:300px;
+        border-radius: 30px;
+        background:#fff;
+        box-shadow:0 0 3px 1px #c6c6c6;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin:0 auto;
+        bottom:150px;
+        padding:30px 35px;
+        box-sizing: border-box;
+    }
+    form{
+        width:100%;
+    }
+    .layui-form-label{
+        text-align:left;
+    }
+    .layui-input{
+        border-radius: 10px;
+    }
+    .layui-btn{
+        border-radius: 10px;
+    }
+</style>
+
+<body>
+<div class="boxbg">
+    <p class="title">
+        味多美后台管理系统
+    </p>
+    <div class="boxs">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <input type="text" name="username" required  lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <input type="password" name="password" required lay-verify="required|pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <input type="text" name="captcha" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input" style="float:left;width:60%">
+                <img  style="float:right;" src="{:captcha_src()}"  class="verify"
+                     onclick="javascript:this.src='{:captcha_src()}?rand='+Math.random()" >
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit lay-filter="formDemo" style="margin-top:5px">确定</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script src="/static/admin/layui.js"></script>
+
+<script>
+
+    layui.use(['form','layer'],function(){
+        var {form,layer,$}=layui;
+        // 表单验证
+        form.verify({
+            username: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    return '用户名不能全为数字';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+        });
+        // 点击确定
+        form.on('submit(formDemo)',function(data){
+            let qs=data.field;
+            $.ajax({
+                url:'/admin/login/check',
+                type:'POST',
+                data:qs,
+                dataType:'json',
+                success:function(res){
+                    let {code,msg}=res;
+                    console.log(res);
+                    if(code==200){
+                        location.href='/admin/main/index';
+                    }else{
+                        layer.msg(msg,{icon:2});
+                    }
+                },
+            });
+            return false;
+        })
+    })
+
+</script>

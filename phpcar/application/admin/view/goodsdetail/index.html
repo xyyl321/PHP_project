@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品管理-展示</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+<style>
+    .layui-table-cell{
+        height:60px;
+        line-height:60px;
+    }
+    #gEdit{
+        display:none;
+        padding:20px 20px 0 0;
+    }
+</style>
+<body>
+    <div style="padding: 15px">
+
+        <table class="layui-table" id="goodsTpl"></table>
+        <script type="text/html" id="banner">
+            {{# let arr = d.img2.split(',')  }}
+            {{# arr.forEach(ele=>{ }}
+                <img style="width:30%" src="{{ ele }}"/>
+            {{# }) }}
+        </script>
+        <script type="text/html" id="state">
+            {{# if(d.shelf==0){ }}
+                <button class="layui-btn layui-btn-warm layui-btn-sm" onclick="status({{d.gid}},this,1)">下架</button>
+            {{# }else{ }}
+                <button class="layui-btn layui-btn-normal layui-btn-sm" onclick="status({{d.gid}},this,0)">上架</button>
+            {{# } }}
+        </script>
+
+    </div>
+</body>
+ <!--编辑-->
+<form class="layui-form" id="gEdit" lay-filter="formTest">
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品分类</label>
+        <div class="layui-input-block">
+            <select name="typeid">
+                {volist name="goodsclass" id="vo"}
+                <option value="{$vo['id']}">{$vo['type_name']}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上下架</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="shelf" lay-skin="switch" lay-text="上架|下架">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">市场价格</label>
+        <div class="layui-input-block">
+            <input type="text" name="market_price" required  lay-verify="required" placeholder="请输入产品市场价格" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">零售价格</label>
+        <div class="layui-input-block">
+            <input type="text" name="price" required  lay-verify="required" placeholder="请输入产品零售价格" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品库存</label>
+        <div class="layui-input-block">
+            <input type="text" name="stock" required  lay-verify="required" placeholder="请输入产品库存" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">缩略图</label>
+        <div class="layui-input-block inputs">
+            <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>上传图片</button>
+            <span class="layui-word-aux">图片最佳比例：1:1 ；图片最大不能超过500kb</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="img1" id="img1">
+        <div class="layui-input-block inputs">
+            <blockquote class="layui-elem-quote layui-quote-nm">
+                预览图：
+                <img id="imgurl" src="" alt="" style="height: 150px;">
+            </blockquote>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">轮播图</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="uploads">多图片上传</button>
+            <span class="layui-word-aux">图片最佳比例：1:1 ；图片最大不能超过500kb；图片最多可保存3张！</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="img2" id="img2">
+        <div class="layui-input-block inputs">
+            <blockquote class="layui-elem-quote layui-quote-nm">
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">产品介绍</label>
+        <div class="layui-input-block">
+            <textarea id="content" name="content"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="editDemo">立即修改</button>
+            <button type="reset" class="layui-btn layui-btn-primary cancle">取消</button>
+        </div>
+    </div>
+</form>
+<script src="/static/admin/jquery/js/jquery-3.4.1.min.js"></script>
+<script>
+    let table,form,layer,layedit;
+    layui.use(['table','element','form','layer','layedit'],function () {
+        let {element,$}=layui;
+        table=layui.table;
+        form=layui.form;
+        layer=layui.layer;
+        layedit=layui.layedit;
+        table.render({
+            elem:'#goodsTpl',
+            url:'/admin/goodsdetail/find',
+            page:true,
+            limit:3,
+            limits:[3,6,9,12,15],
+            cols: [[
+                {field:'gid',title:'ID',width:50,fixed:'left'},
+                {field:'name',title:'产品名称',width:100},
+                {field:'type_name',title:'产品分类',width:150},
+                {field:'img1',title:'缩略图',width:150,templet:function (d) {
+                    return '<img src="'+d.img1+'" />'
+                }},
+                {field:'img2',title:'轮播图',templet:'#banner',width:300},
+                {field:'market_price',title:'市场价',width:80,align:'center'},
+                {field:'price',title:'零售价',width:80,align:'center'},
+                {field:'stock',title:'库存',width:80,align:'center'},
+                {field:'create_time',title:'创建时间',width:160,align:'center'},
+                {field:'update_time',title:'修改时间',width:160,align:'center'},
+                {field:'shelf',title:'状态',width:80,align:'center',templet:'#state'},
+                {title:'操作',width:150,align:'center', templet:function(d){
+                    return `<button class="layui-btn layui-btn-sm"  onclick="edits(${d.gid})">编辑</button>
+                             <button class="layui-btn layui-btn-danger layui-btn-sm"  onclick="dels(${d.gid})">删除</button>`
+                }}
+            ]]
+        });
+        //建立编辑器
+        layedit.build('content',{
+            height:200,
+        });
+    });
+    //上架，下架的修改
+    function status(id,obj,state){
+        $.get("/admin/goodsdetail/states",{gid:id,shelf:state},function(res){
+            let {code,msg}=res;
+            if(state==1){
+                if(code==200){
+                    $(obj).parent().html(`<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="status(${id},this,0)">上架</button>`);
+                    layer.msg(msg,{icon:1,time:500})
+                }else{
+                    layer.msg(msg,{icon:2,time:500})
+                }
+            }else{
+                if(code==200){
+                    $(obj).parent().html(`<button type="button" class="layui-btn layui-btn-sm layui-btn-warm" onclick="status(${id},this,1)">下架</button>`);
+                    layer.msg(msg,{icon:1,time:500})
+                }else{
+                    layer.msg(msg,{icon:2,time:500})
+                }
+            }
+        })
+    };
+    // 删除
+    function dels(id){
+        layer.confirm('您确定要删除吗？', {
+            title:'删除',
+            skin:'layui-layer-molv',
+            btn: ['确定','取消']
+        }, function(){
+            $.get('/admin/goodsdetail/delete',{gid:id},function(res){
+                if(res.code===200){
+                    layer.close();
+                    layer.msg(res.msg,{icon:1,time:800});
+                    table.reload('goodsTpl',{
+                        url:'/admin/goodsdetail/find'
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:2,time:1000});
+                }
+            })
+        }, function(){
+            layer.close();
+        });
+    }
+
+    // 编辑->弹出框
+    let editIndex;
+    function edits(id){
+        editIndex=layer.open({
+            type:1,
+            title:'修改产品信息',
+            skin:'layui-layer-molv',
+            area:['800px','400px'],
+            content:$('#gEdit')
+        });
+        $.get("/admin/goodsdetail/selects",{gid:id},function(res){
+            console.log(res);
+            form.val("formTest", {
+                "typeid":res.typeid,
+                "name":res.name,
+                "shelf":res.shelf,
+                "market_price":res.market_price,
+                "price":res.price,
+                "stock":res.stock,
+                "img1":res.img1,
+                "img2":res.img2,
+                "content":res.content
+            });
+            $('#imgurl').attr('src',res.img1);
+            let arr=res.img2.split(',');
+            $('#demo2').empty();
+            arr.forEach((ele)=>{
+                $('#demo2').append('<img src="'+ele+'" width="30%">');
+            })
+        })
+    }
+    // 编辑->点击取消
+    $(".cancle").click(function(){
+        layer.close(editIndex);
+    });
+</script>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理-添加</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+<body>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品分类</label>
+            <div class="layui-input-block">
+                <select name="typeid">
+                    {volist name="goodsclass" id="vo"}
+                        <option value="{$vo['id']}">{$vo['type_name']}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required  lay-verify="required" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上下架</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="shelf" checked lay-skin="switch" value="1" lay-text="上架|下架">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">市场价格</label>
+            <div class="layui-input-block">
+                <input type="text" name="market_price" required  lay-verify="required" placeholder="请输入产品市场价格" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">零售价格</label>
+            <div class="layui-input-block">
+                <input type="text" name="price" required  lay-verify="required" placeholder="请输入产品零售价格" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品库存</label>
+            <div class="layui-input-block">
+                <input type="text" name="stock" required  lay-verify="required" placeholder="请输入产品库存" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">缩略图</label>
+            <div class="layui-input-block inputs">
+                <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>上传图片</button>
+                <span class="layui-word-aux">图片最佳比例：1:1 ；图片最大不能超过500kb</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" name="img1" id="img1">
+            <div class="layui-input-block inputs">
+                <blockquote class="layui-elem-quote layui-quote-nm">
+                    预览图：
+                    <img id="imgurl" src="" alt="" style="width: 300px;">
+                </blockquote>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">轮播图</label>
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="uploads">多图片上传</button>
+                <span class="layui-word-aux">图片最佳比例：1:1 ；图片最大不能超过500kb；图片最多可保存3张！</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" name="img2" id="img2">
+            <div class="layui-input-block inputs">
+                <blockquote class="layui-elem-quote layui-quote-nm">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">产品介绍</label>
+            <div class="layui-input-block">
+                <textarea id="content" name="content" style="display: none;"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+    <script>
+        layui.use(['form', 'layer','upload','layedit'], function () {
+            let {form, layer, $,upload,layedit} = layui;
+            // 上传图片
+            upload.render({
+                elem: '#upload',
+                url: '/admin/upload/index',
+                accept:'images',
+                acceptMime:'image/*',
+                size:500,
+                done: function(res){
+                    let {code,msg,src}=res;
+                    if(code==200){
+                        layer.msg(msg,{icon:6});
+                        $('#img1').val(src);
+                        $('#imgurl').attr('src',src);
+                    }else{
+                        layer.msg(msg,{icon:5})
+                    }
+                }
+            });
+            //多图片上传
+            upload.render({
+                elem: '#uploads',
+                url: '/admin/upload/index',
+                accept:'images',
+                acceptMime:'image/*',
+                size:500,
+                multiple: true,
+                number:3,
+                done: function(res){
+                    //上传完毕
+                    let {code,msg,src}=res;
+                    if(code==200){
+                        // $('#demo2 img').length <3 && getimg(src);
+                        if($('#demo2 img').length <3){
+                            getimg(src);
+                            layer.msg(msg,{icon:6});
+                        }else{
+                            layer.msg('最多能上传3张图片',{icon:5});
+                        }
+                    }else{
+                        layer.msg(msg,{icon:5})
+                    }
+                }
+            });
+            function getimg(src) {
+                $('#img2').val((index,value)=>value+src+",");
+                $('#demo2').append('<img src="'+ src +'" alt="" class="layui-upload-img" style="width:30%">')
+            }
+            //建立编辑器
+            layedit.build('content',{
+                height:200,
+            });
+            // 添加
+            form.on("submit(*)", function (data) {
+                let formData = data.field;
+                delete formData.file;
+                formData.img2=formData.img2.slice(0,-1);
+                $.ajax({
+                    url: '/admin/goodsdetail/add',
+                    type: 'post',
+                    dataType: 'json',
+                    data: formData,
+                    success: function (res) {
+                        let {code, msg} = res;
+                        if(code==200){
+                            layer.msg(msg,{icon:1,time:1000});
+                        }else{
+                            layer.msg(msg,{icon:2,time:2000})
+                        }
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+</body>
+</html>

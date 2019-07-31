@@ -95,7 +95,6 @@ include "../footer.php";
                 let datas = JSON.parse(res);
                 if (datas.code === 200) {
                     layer.msg(datas.msg, {icon: 1, time: 500});
-                    form.render();
 
                 } else {
                     layer.msg(datas.msg, {icon: 2, time: 1000});

@@ -1,0 +1,62 @@
+@import "public.css";
+
+.imgBox{
+    width:100%;
+    height:270px;
+    position:relative;
+    overflow:hidden;
+}
+.imgBox .imgBig{
+    display:block;
+    width:100%;
+    position:absolute;
+    bottom:-30px;
+}
+.conBox{
+    width:1024px;
+    height:540px;
+    margin:60px auto 40px;
+    padding:0 20px;
+    box-sizing:border-box;
+}
+.conBox .title{
+    width:100%;
+    height:81px;
+    line-height:81px;
+    text-align:center;
+    font-size:32px;
+    color:#000;
+}
+.conBox .date{
+    width:100%;
+    height:21px;
+    line-height:21px;
+    text-align:center;
+    font-size:14px;
+    color:#878787;
+    margin-bottom:50px;
+}
+.conBox .con{
+    width:100%;
+    height:auto;
+    line-height:24px;
+    font-size:14px;
+    color:#3e3e3e;
+}
+.conBox .jump{
+    width:100%;
+    height:43px;
+    padding:0 10px;
+    box-sizing:border-box;
+    margin-top:40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.conBox .jump a{
+    font-size:14px;
+    color:#f0443a;
+}
+.conBox .jump a:hover{
+    color:#3e3e3e;
+}

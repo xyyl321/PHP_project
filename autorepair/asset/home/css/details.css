@@ -1,0 +1,157 @@
+@import "public.css";
+
+.imgBox{
+    width:100%;
+    height:270px;
+    position:relative;
+    overflow:hidden;
+}
+.imgBox .imgBig{
+    display:block;
+    width:100%;
+    position:absolute;
+    bottom:0;
+}
+.conBox{
+    width:1024px;
+    height:auto;
+    margin:20px auto 40px ;
+}
+.conBox .title{
+    width:100%;
+    height:102px;
+    line-height:102px;
+    text-align:center;
+    font-size:32px;
+    color:#000;
+}
+.conBox .detailBox{
+    width:1024px;
+    height:325px;
+    padding:0 25px;
+    box-sizing:border-box;
+    margin:0 auto;
+}
+.conBox .detailBox .banners{
+    width:482px;
+    height:100%;
+    float:left;
+    position:relative;
+}
+.conBox .detailBox .banners .banner{
+    width:300px;
+    height:300px;
+    position:absolute;
+    left:0;
+    right:0;
+    margin:auto;
+    overflow:hidden;
+}
+.conBox .detailBox .banners .banner img{
+    display:block;
+    width:300px;
+    height:300px;
+    position:absolute;
+    left:300px;
+}
+.conBox .detailBox .banner .btnLeft{
+    width:30px;
+    height:30px;
+    background:url("../img/detailsleft.png") no-repeat 0 0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+    left:0;
+    display:none;
+}
+.conBox .detailBox .banner .btnRight{
+    width:30px;
+    height:30px;
+    background:url("../img/detailsleft.png") no-repeat -30px 0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+    right:0;
+    display:none;
+}
+.conBox .detailBox .banners .dots{
+    width:60px;
+    height:8px;
+    position:absolute;
+    left:0;
+    right:0;
+    margin:auto;
+    bottom:10px;
+}
+.conBox .detailBox .banners .dots .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    float:left;
+    margin:0 6px;
+    background:#7E7E7E;
+}
+.conBox .detailBox .banners .dots .dot1{
+    background:#191919;
+    transition:0.3s;
+}
+.conBox .detailBox .rightBox{
+    width:492px;
+    height:auto;
+    padding:0 5px;
+    box-sizing:border-box;
+    float:right;
+}
+.conBox .detailBox .rightBox .market{
+    width:100%;
+    height:25px;
+    margin-top:40px;
+    line-height:25px;
+    font-size:14px;
+    color:#808080;
+}
+.conBox .detailBox .rightBox .empty{
+    width:100%;
+    height:24px;
+}
+.conBox .detailBox .rightBox .price{
+    width:100%;
+    height:29px;
+}
+.conBox .detailBox .rightBox .price .s1{
+    font-size:14px;
+    color:#808080;
+}
+.conBox .detailBox .rightBox .price .s2{
+    font-size:26px;
+    font-weight:bold;
+    color:#e40000;
+}
+.conBox .detailBox .rightBox .xian{
+    width:100%;
+    height:29px;
+    border-bottom:1px dashed #808080;
+}
+.conBox .introduce{
+    width:1024px;
+    height:auto;
+    margin-bottom:40px;
+    padding:0 25px;
+    box-sizing:border-box;
+}
+.conBox .introduce .goods{
+    width:100%;
+    height:59px;
+    line-height:59px;
+    font-size:22px;
+    color:#3e3e3e;
+}
+.conBox .introduce .text{
+    width:100%;
+    height:auto;
+    line-height:24px;
+    font-size:16px;
+    color:#808080;
+}

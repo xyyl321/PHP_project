@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+
+<style>
+    .layui-tab {
+        width: 100%;
+        height: calc(100% - 10px);
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-tab-content {
+        position: absolute;
+        top: 41px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+    }
+    .layui-tab-item{
+        width:100%;
+        height:100%;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+</style>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">味多美 后台管理</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="{$head_img}" class="layui-nav-img">
+                    {$username}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="/admin/login">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">导航管理</a>
+                    <dl class="layui-nav-child " >
+                        <dd data-id="1-2" data-url="/admin/nav/addindex"><a href="javascript:;">导航添加</a></dd>
+                        <dd data-id="1-1" data-url="/admin/nav/index"><a href="javascript:;">导航展示</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">轮播图管理</a>
+                    <dl class="layui-nav-child">
+                        <dd  data-id="2-2" data-url="/admin/banner/addindex"><a href="javascript:;">轮播图添加</a></dd>
+                        <dd data-id="2-1" data-url="/admin/banner/index"><a href="javascript:;">轮播图展示</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">产品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd data-id="3-1" data-url="/admin/goodsdetail/addindex"><a href="javascript:;">产品添加</a></dd>
+                        <dd  data-id="3-2" data-url="/admin/goodsdetail/index"><a href="javascript:;">产品展示</a></dd>
+                    </dl>
+                </li>
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">服务项目管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd data-id="4-1"><a href="javascript:;">服务项目添加</a></dd>-->
+                        <!--<dd  data-id="4-2"><a href="javascript:;">服务项目展示</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">新闻资讯管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd data-id="5-1"><a href="javascript:;">新闻资讯添加</a></dd>-->
+                        <!--<dd  data-id="5-2"><a href="javascript:;">新闻资讯展示</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">预约信息管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd  data-id="6-1"><a href="javascript:;">预约信息展示</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">团队管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd data-id="7-1"><a href="javascript:;">团队人员添加</a></dd>-->
+                        <!--<dd  data-id="7-2"><a href="javascript:;">团队信息</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">管理员管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd data-id="8-1"><a href="javascript:;">管理员添加</a></dd>-->
+                        <!--<dd  data-id="8-2"><a href="javascript:;">管理员信息</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div  style="padding: 8px;width: 100%;height: 100%;box-sizing: border-box;overflow: hidden;">
+            <!--  选项卡-->
+            <div class="layui-tab layui-tab-card" lay-filter="demo" lay-allowclose="true">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" lay-id="3-2" id="firstpage">产品展示</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 8px">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="/admin/goodsdetail/index"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © www.pcar.com &nbsp;&nbsp;&nbsp;&nbsp;2019.07.22
+    </div>
+</div>
+
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+
+    layui.use(['element'],function(){
+        var {element,$}=layui;
+
+        $('.layui-nav-child dd').on('click', function(){
+            let othis = $(this);
+            let title=othis.children('a').text();
+            let id=othis.data('id');
+            let url = othis.data('url');
+            let tabLi=$(".layui-tab-title>li");
+            if(tabLi.length){
+                let flag=false;
+                $.each(tabLi,(index,elem)=>{
+                    if($(elem).attr('lay-id')==id){
+                        flag=true;
+                    }
+                });
+                if(!flag){
+                    element.tabAdd('demo', {
+                        title,
+                        content: '<iframe src="' + url + '">',
+                        id
+                    });
+                }
+                element.tabChange('demo', id);
+            }else{
+                element.tabAdd('demo', {
+                    title,
+                    content: '<iframe src="' + url + '">',
+                    id
+                });
+                element.tabChange('demo', id);
+            }
+        });
+    })
+
+</script>
+
+</body>
+</html>

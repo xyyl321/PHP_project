@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图管理-添加</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+</head>
+
+<style>
+    .layui-form{
+        width:800px;
+        margin:0 auto;
+    }
+</style>
+<body>
+
+<div style="padding: 15px;">
+
+    <form action="" class="layui-form" id="addBanner">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传图片</label>
+            <div class="layui-input-block inputs">
+                <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>上传图片</button>
+                <span class="layui-word-aux">图片最佳尺寸：1920*800；图片最大不能超过500kb</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" name="img" id="imgup">
+            <div class="layui-input-block inputs">
+                <blockquote class="layui-elem-quote layui-quote-nm" style="height:150px;">
+                    <img id="imgurl" src="" alt="" style="height:150px;">
+                </blockquote>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block inputs">
+                <input type="text" name="sort" required  lay-verify="required|number" placeholder="请输入序号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="addDemo">点击添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+
+<script>
+    layui.use(['form', 'layer','upload'], function () {
+        let {form, layer, $,upload} = layui;
+        // 上传图片
+        upload.render({
+            elem: '#upload',
+            url: '/admin/upload/index',
+            accept:'images',
+            acceptMime:'image/*',
+            size:500,
+            done: function(res){
+                let {code,msg,src}=res;
+                if(code==200){
+                    layer.msg(msg,{icon:6});
+                    $('#imgup').val(src);
+                    $('#imgurl').attr('src',src);
+                }else{
+                    layer.msg(msg,{icon:5})
+                }
+            }
+        });
+        // 添加
+        form.on("submit(addDemo)", function (data) {
+            let formData = data.field;
+            delete formData.file;
+            $.ajax({
+                url: '/admin/banner/add',
+                type: 'post',
+                dataType: 'json',
+                data: formData,
+                success: function (res) {
+                    let {code, msg} = res;
+                    if(code==200){
+                        layer.msg(msg,{icon:1,time:1000});
+                    }else{
+                        layer.msg(msg,{icon:2,time:2000})
+                    }
+                }
+            });
+            return false;
+        })
+    });
+</script>

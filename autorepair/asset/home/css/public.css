@@ -1,0 +1,235 @@
+*{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+a{
+    text-decoration: none;
+}
+.col{
+    color:#FF6000 !important;
+}
+header{
+    width:100%;
+    height:90px;
+    background:black;
+}
+.headBox{
+    width:1024px;
+    height:100%;
+    margin:0 auto;
+}
+.headBox .headLeft{
+    width:240px;
+    height:90px;
+    box-sizing:border-box;
+    float:left;
+    display:flex;
+    align-items:center;
+}
+.headBox .headLeft a{
+    display:block;
+    width:173px;
+    height:52px;
+}
+.headBox .headLeft a img{
+    width:173px;
+    height:52px;
+}
+.headBox .headRight{
+    height:90px;
+    float:right;
+    padding-right:24px;
+    display:flex;
+    align-items:center;
+}
+.headBox .headRight a{
+    display:block;
+    height:37px;
+    line-height:37px;
+    margin:0 25px;
+    font-size:14px;
+    color:#777;
+}
+.headBox .headRight a:hover{
+    color:#FF6000;
+}
+section{
+    width:1024px;
+    height:auto;
+    margin:0 auto;
+    overflow:hidden;
+}
+.imgs{
+    display:block;
+    width:1024px;
+    margin-top:20px;
+}
+.aboutUs{
+    width:100%;
+    height:125px;
+    padding-top:40px;
+    box-sizing:border-box;
+}
+.aboutUs .aboutBox{
+    width:100%;
+    height:65px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.aboutUs .aboutBox .sp{
+    width:428px;
+    height:1px;
+    background:#D5D5D5;
+}
+.aboutUs .aboutBox .con{
+    width:128px;
+    height:100%;
+}
+.aboutUs .aboutBox .con .title{
+    width:100%;
+    height:42px;
+    line-height:42px;
+    text-align:center;
+    align-items:center;
+    font-size:32px;
+    color:#333;
+}
+.aboutUs .aboutBox .con .eng{
+    width:100%;
+    height:23px;
+    line-height:23px;
+    text-align:center;
+    font-size:14px;
+    color:#a5a5a5;
+}
+footer{
+    width:100%;
+    height:315px;
+    background:#242424;
+    padding-top:40px;
+}
+footer .storeBox{
+    width:1024px;
+    height:197px;
+    margin:0 auto;
+}
+footer .storeBox .store{
+    width:331.33px;
+    height:100%;
+    float:left;
+}
+footer .storeBox .store .p1{
+    height:25px;
+    line-height:25px;
+    font-size:14px;
+    font-weight:bold;
+}
+footer .storeBox .store .pnull{
+    height:24px;
+}
+footer .storeBox .store .p2{
+    font-weight:normal;
+    color:#696969;
+}
+footer .storeBox .store .p11{
+    height:24px;
+    line-height:24px;
+    font-size:15px;
+    font-weight:bold;
+    color:#d3d3d3;
+}
+footer .storeBox .store .p12{
+    font-size:12px;
+    font-weight:normal;
+    color:#696969;
+}
+footer .diBox{
+    width:1024px;
+    height:98px;
+    margin:0 auto;
+    padding-top:37px;
+    box-sizing:border-box;
+}
+footer .diBox .contact{
+    width:100%;
+    height:36px;
+    display:flex;
+    justify-content:center;
+}
+footer .diBox .contact .img{
+    width:32px;
+    height:32px;
+    margin:0 5px;
+}
+footer .diBox .contact .img1{
+    background:url("../img/logos.png") -64px -160px no-repeat;
+}
+footer .diBox .contact .img2{
+    background:url("../img/logos.png") 0 -160px no-repeat;
+}
+footer .diBox .contact .img3{
+    background:url("../img/logos.png") -640px -160px no-repeat;
+}
+footer .diBox .contact .img4{
+    background:url("../img/logos.png") -672px -160px no-repeat;
+}
+footer .diBox .contact .img5{
+    background:url("../img/logos.png") -128px -160px no-repeat;
+}
+footer .diBox .copyright{
+    width:100%;
+    height:25px;
+    line-height:25px;
+    text-align:center;
+    font-size:12px;
+    color:#c6c6c6;
+}
+
+.fix{
+    width:100%;
+    height:58px;
+    background:#000;
+    position:fixed;
+    top:-58px;
+}
+.fixedBox{
+    width:1024px;
+    height:100%;
+    margin:0 auto;
+}
+.fixedBox .fixedLeft{
+    width:211px;
+    height:58px;
+    float:left;
+    display:flex;
+    align-items:center;
+}
+.fixedBox .fixedLeft a{
+    display:block;
+    width:116px;
+    height:35px;
+}
+.fixedBox .fixedLeft a img{
+    width:116px;
+    height:35px;
+}
+.fixedBox .fixedRight{
+    height:58px;
+    float:right;
+    padding-right:24px;
+    display:flex;
+    align-items:center;
+}
+.fixedBox .fixedRight a{
+    display:block;
+    height:37px;
+    line-height:37px;
+    margin:0 25px;
+    font-size:14px;
+    color:#777;
+}
+.fixedBox .fixedRight a:hover{
+    color:#FF6000;
+}

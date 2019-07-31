@@ -21,7 +21,8 @@ switch($type){
                             $resultdata=$result->fetch_all(MYSQLI_ASSOC);
                             if( !$resultdata){
                                 // 插入数据
-                                $time=time();
+                                date_default_timezone_set("Asia/Shanghai");
+                                $time= date("Y-m-d H:i:s");
                                 $password=md5($password);
                                 $sqlAdmin="insert into admin (username,password,status,time) values ('$username','$password','$status','$time')";
                                 $resultAdmin=$mysql->query($sqlAdmin);

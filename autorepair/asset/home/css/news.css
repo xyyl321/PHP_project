@@ -1,0 +1,37 @@
+@import "public.css";
+
+.knows{
+    width:100%;
+    height:auto;
+    margin-top:30px;
+}
+.knows .rows{
+    width:974px;
+    height:225px;
+    margin:0 auto;
+}
+.knows .rows>li{
+    width:100%;
+    height:35px;
+    border-bottom:1px dotted #ccc; 
+    line-height:35px;
+    padding:0 16px 0 5px;
+    box-sizing:border-box;
+}
+.knows .rows>li .con{
+    color:#333;
+    font-size:13px;
+    float:left;
+}
+.knows .rows>li .conr{
+    color:#d6d6d6;
+    font-size:12px;
+    float:right;
+}
+.knows .rows>li:hover .con{
+    color:#E30201;
+}
+.imgsdi{
+    margin-top:60px;
+    margin-bottom:80px;
+}
