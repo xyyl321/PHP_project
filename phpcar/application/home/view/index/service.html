@@ -1,0 +1,34 @@
+{include file="public/header" title="汽车维修—服务项目"}
+<link rel="stylesheet" href="__HOME_CSS__/service.css">
+<script src="__HOME_JS__/public.js"></script>
+
+<section>
+    <img src="__HOME_IMG__/aboutimg3.jpg" alt="" class="imgs">
+    <div class="aboutUs">
+        <div class="aboutBox">
+            <span class="sp"></span>
+            <div class="con">
+                <p class="title">服务项目</p>
+                <p class="eng">Services</p>
+            </div>
+            <span class="sp"></span>
+        </div>
+    </div>
+    <div class="sifen">
+        {volist name="service" id="vo"}
+            <div class="fen">
+                <div class="imgBorder">
+                    <img src="{$vo['simg']}" alt="">
+                </div>
+                <a href="javascript:;" class="title">{$vo['sname']}</a>
+                <div class="rail">
+                    <img src="__HOME_IMG__/rail.png" alt="">
+                </div>
+                <p class="con">{$vo['scon']}</p>
+            </div>
+        {/volist}
+    </div>
+</section>
+
+{include file="public/footer"}
+

@@ -1,0 +1,51 @@
+{include file="public/header" title="汽车维修—商品详情"}
+    <link rel="stylesheet" href="__HOME_CSS__/details.css">
+
+<div class="imgBox">
+    <img src="__HOME_IMG__/aboutimg41.jpg" alt="" class="imgBig">
+</div>
+<div class="conBox">
+    <p class="title">{$details['name']}</p>
+    <div class="detailBox">
+        <div class="banners">
+            <div class="banner">
+                {volist name="$details['imgs']" id="vo"}
+                    <img src="{$vo}" alt="">
+                {/volist}
+                <div class="btnLeft"></div>
+                <div class="btnRight"></div>
+            </div>
+            <div class="dots">
+                {for start='0' end="count($details['imgs'])" }
+                    <div class="dot"></div>
+                {/for}
+            </div>
+        </div>
+        <div class="rightBox">
+            <p class="market">市场价：￥{$details['market_price']}</p>
+            <div class="empty"></div>
+            <div class="price">
+                <span class="s1">零售价：</span>
+                <span class="s2">￥{$details['price']}</span>
+            </div>
+            <div class="xian"></div>
+            <p class="market">库存状况：{$details['stock']}</p>
+        </div>
+    </div>
+    <div class="introduce">
+        <p class="goods">商品介绍</p>
+        {$details['content']}
+        <!--<p class="text">-->
+            <!--応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。-->
+        <!--</p>-->
+        <!--<p class="text">&nbsp;</p>-->
+        <!--<p class="text">-->
+            <!--応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。夲夳夵壱売壳圢圤圥圦圧，圩圪囡団囤囥咍咎壱売壳圢圤圥圦応损捠捡换换，攴朰朲朳枛朸桸桹桺奿妀。-->
+        <!--</p>-->
+    </div>
+</div>
+
+<script src="__HOME_JS__/animate.js"></script>
+<script src="__HOME_JS__/details.js"></script>
+
+{include file="public/footer"}

@@ -56,9 +56,6 @@
         <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" onclick="dels({{d.id}})">
             <i class="layui-icon">&#xe640;</i>
         </button>
-        <!--<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" data-id="{{d.id}}" id="delbtn">-->
-        <!--<i class="layui-icon">&#xe640;</i>-->
-        <!--</button>-->
     </script>
 
 </div>
@@ -102,6 +99,7 @@
 <script>
 
     var layer,table,form,upload;
+    let arrImg=[];
     layui.use(['element','table','form','upload'],function(){
         var element = layui.element;
         var $ = layui.jquery;
@@ -140,7 +138,7 @@
             return false;
         });
 
-        // 编辑
+        // 编辑-》修改
         form.on('submit(editDemo)',function(data){
             // console.log(data.field);
             $.post("/admin/banner/edit",data.field,function(res){
@@ -149,7 +147,18 @@
                     layer.close(editIndex);
                     table.reload('tableBan',{
                         url:'/admin/banner/find'
-                    })
+                    });
+                    arrImg.pop();
+                    $.ajax({
+                        url: '/admin/upload/imgdel',
+                        type: 'post',
+                        data:{img:arrImg},
+                        success:function(res){
+                            if(res.code==200){
+                                arrImg=[];
+                            }
+                        }
+                    });
                 }else{
                     layer.msg(res.msg,{icon:5})
                 }
@@ -170,52 +179,40 @@
                     layer.msg(msg, {icon: 6});
                     $('#imgup').val(src);
                     $('#imgurl').attr('src', src);
+                    arrImg.push(src);
                 } else {
                     layer.msg(msg, {icon: 5})
                 }
             }
         });
-
-        // 删除
-//        $('.layui-table').on('click','#delbtn',function(){
-//            let othis=$(this);
-//            let id=othis.data('id');
-//            console.log(id);
-//            layer.confirm('您确定要删除吗？', {
-//                title:'删除',
-//                skin:'layui-layer-molv',
-//                btn: ['确定','取消'] //按钮
-//            }, function(){
-//                $.get('/admin/banner/delete',{id:id},function(res){
-//                    if(res.code===200){
-//                        layer.close();
-//                        layer.msg(res.msg,{icon:1,time:800});
-//                        table.reload('tableBan',{
-//                            url:'/admin/banner/find'
-//                        });
-//                    }else{
-//                        layer.msg(res.msg,{icon:2,time:1000});
-//                    }
-//                })
-//            }, function(){
-//                layer.close();
-//            });
-//        });
     });
 
     // 删除
     function dels(id){
+        let arrDel=[];
         layer.confirm('您确定要删除吗？', {
             title:'删除',
             skin:'layui-layer-molv',
             btn: ['确定','取消'] //按钮
         }, function(){
             $.get('/admin/banner/delete',{id:id},function(res){
+                console.log(res);
                 if(res.code===200){
                     layer.close();
                     layer.msg(res.msg,{icon:1,time:800});
                     table.reload('tableBan',{
                         url:'/admin/banner/find'
+                    });
+                    arrDel.push(res.img);
+                    $.ajax({
+                        url: '/admin/upload/imgdel',
+                        type: 'post',
+                        data:{img:arrDel},
+                        success:function(res){
+                            if(res.code==200){
+                                arrDel=[];
+                            }
+                        }
                     });
                 }else{
                     layer.msg(res.msg,{icon:2,time:1000});
@@ -226,7 +223,7 @@
         });
     }
 
-    // 编辑
+    // 编辑->获取数据
     let editIndex;
     function edits(id){
         editIndex=layer.open({
@@ -242,12 +239,24 @@
             $("#imgup").val(img);
             $("#imgurl").attr('src',img);
             $("#sort").val(sort);
+            arrImg.push(img);
         })
     }
 
     // 取消按钮
     $(".cancle").click(function(){
         layer.close(editIndex);
+        arrImg.shift();
+        $.ajax({
+            url: '/admin/upload/imgdel',
+            type: 'post',
+            data:{img:arrImg},
+            success:function(res){
+                if(res.code==200){
+                    arrImg=[];
+                }
+            }
+        });
     });
 
     // 排序

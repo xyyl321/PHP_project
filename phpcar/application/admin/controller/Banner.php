@@ -100,13 +100,16 @@ class Banner extends Base
     {
         $data = $this->request->get();
         $id=$data['id'];
+        $img=Db::table('banner')->field('img')->where('id',$id)->find();
+        $img=$img['img'];
         $model=model('banner');
         try{
             $result=$model->deletes(['id'=>$id]);
             if ($result) {
                 return json([
                     'code' => Config::get('code.success'),
-                    'msg' => '数据删除成功'
+                    'msg' => '数据删除成功',
+                    'img'=>$img
                 ]);
             } else {
                 return json([

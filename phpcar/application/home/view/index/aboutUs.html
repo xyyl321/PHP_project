@@ -1,0 +1,52 @@
+{include file="public/header" title="汽车维修—关于我们" }
+
+<link rel="stylesheet" href="__HOME_CSS__/aboutUs.css">
+<script src="__HOME_JS__/animate.js"></script>
+<script src="__HOME_JS__/public.js"></script>
+
+<section>
+    <img src="__HOME_IMG__/aboutimg1.jpg" alt="" class="imgs">
+    <div class="aboutUs">
+        <div class="aboutBox">
+            <span class="sp"></span>
+            <div class="con">
+                <p class="title">关于我们</p>
+                <p class="eng">About Us</p>
+            </div>
+            <span class="sp"></span>
+        </div>
+    </div>
+    <div class="detailBox">
+        <div class="details">
+            <p>汽车有限公司成立于XXX年XX月XX日，是本地区唯一的授权销售服务中心和特约售后服务中心。主要从事多种品牌的整车销售、 售后服务、配件供应及信息反馈业务。公司秉承 “尊荣无限
+                至上体验”的服务理念，培养更主动贴心的服务意识,追求更周到便捷的服务水准，让每一位车主，都体验到管家般的细致专业，享受到真正待为贵宾般的尊崇体验。</p>
+            <p>&nbsp;</p>
+            <p>除了为车主提供贴心专业的购车及售后服务，公司还经常组织车主活动，为车主朋友提供一个轻松、愉快的交流平台，让每一位车主都能大家庭里感受到“车生活”更多的乐趣。经过两年的时间，公司已经发展，拥有一流的硬件设施、科学的管理、精湛的技术、诚心的服务品质和积极进取的优秀团队。
+            </p>
+            <p>&nbsp;</p>
+            <p>真诚期望XXX能成为您的爱车之家！</p>
+        </div>
+        <img src="__HOME_IMG__/account01.jpg" alt="">
+    </div>
+    <div class="aboutUs">
+        <div class="aboutBox">
+            <span class="sp"></span>
+            <div class="con">
+                <p class="title">维修师傅</p>
+                <p class="eng">Master Team</p>
+            </div>
+            <span class="sp"></span>
+        </div>
+    </div>
+    <div class="master">
+        {volist name="team" id="vo"}
+            <div class="personOne">
+                <img src="{$vo['head_img']}" alt="">
+                <p class="name">{$vo['name']}</p>
+                <p class="post">{$vo['position']}</p>
+            </div>
+        {/volist}
+    </div>
+</section>
+
+{include file="public/footer"}

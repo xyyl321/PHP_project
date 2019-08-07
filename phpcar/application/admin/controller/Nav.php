@@ -140,7 +140,6 @@ class Nav extends Base
             ]);
         }
     }
-
     // 导航添加页面
     public function addindex()
     {

@@ -52,6 +52,7 @@
 </html>
 
 <script>
+    let arrImg=[];
     layui.use(['form', 'layer','upload'], function () {
         let {form, layer, $,upload} = layui;
         // 上传图片
@@ -67,11 +68,13 @@
                     layer.msg(msg,{icon:6});
                     $('#imgup').val(src);
                     $('#imgurl').attr('src',src);
+                    arrImg.push(src);
                 }else{
                     layer.msg(msg,{icon:5})
                 }
             }
         });
+
         // 添加
         form.on("submit(addDemo)", function (data) {
             let formData = data.field;
@@ -85,6 +88,17 @@
                     let {code, msg} = res;
                     if(code==200){
                         layer.msg(msg,{icon:1,time:1000});
+                        arrImg.pop();
+                        $.ajax({
+                            url: '/admin/upload/imgdel',
+                            type: 'post',
+                            data:{img:arrImg},
+                            success:function(res){
+                                if(res.code==200){
+                                    arrImg=[];
+                                }
+                            }
+                        });
                     }else{
                         layer.msg(msg,{icon:2,time:2000})
                     }

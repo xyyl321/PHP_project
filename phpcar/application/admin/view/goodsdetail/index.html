@@ -113,7 +113,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">产品介绍</label>
         <div class="layui-input-block">
-            <textarea id="content" name="content"></textarea>
+            <textarea id="content" name="content" style="display: none"></textarea>
         </div>
     </div>
 
@@ -126,7 +126,7 @@
 </form>
 <script src="/static/admin/jquery/js/jquery-3.4.1.min.js"></script>
 <script>
-    let table,form,layer,layedit;
+    let table,form,layer,layedit,indexEd;
     layui.use(['table','element','form','layer','layedit'],function () {
         let {element,$}=layui;
         table=layui.table;
@@ -160,8 +160,12 @@
             ]]
         });
         //建立编辑器
-        layedit.build('content',{
+        indexEd=layedit.build('content',{
             height:200,
+            uploadImage: {
+                url: '/admin/upload/edits',
+                type: 'post'
+            }
         });
     });
     //上架，下架的修改
@@ -231,12 +235,15 @@
                 "img2":res.img2,
                 "content":res.content
             });
+
+            $('input[name=shelf]').attr('checked',res.shelf ? 'true' : 'false');
             $('#imgurl').attr('src',res.img1);
             let arr=res.img2.split(',');
             $('#demo2').empty();
             arr.forEach((ele)=>{
                 $('#demo2').append('<img src="'+ele+'" width="30%">');
             })
+            layedit.setContent(indexEd,res.content);
         })
     }
     // 编辑->点击取消

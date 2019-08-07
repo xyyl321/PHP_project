@@ -1,0 +1,78 @@
+{include file="public/header" title="汽车维修" /}
+
+<link rel="stylesheet" href="__HOME_CSS__/index.css">
+<script src="__HOME_JS__/animate.js"></script>
+<script src="__HOME_JS__/index.js"></script>
+
+<div class="banner">
+    <div class="bannerImg">
+        {volist name="banner" id="vo"}
+            <img src="{$vo['img']}" alt="">
+        {/volist}
+    </div>
+    <div class="bannerDot">
+        {volist name="banner" id="vo"}
+            <div class="dot"></div>
+        {/volist}
+    </div>
+    <div class="arrow arrow1">
+        <img src="__HOME_IMG__/bannerleft.png" alt="">
+    </div>
+    <div class="arrow arrow2">
+        <img src="__HOME_IMG__/bannerright.png" alt="">
+    </div>
+</div>
+<section>
+    <div class="textBox">
+        <p class="title">我们的努力，只是为了您的满意</p>
+        <p class="detail">我们为您提供集汽车内外装饰、汽车影音改装、汽车精品销售、汽车美容养护于一体的大型“一站式汽车服务”</p>
+    </div>
+    <div class="sifen">
+        {volist name="aspect" id="vo"}
+            <div class="fen">
+                <img src="{$vo['imgurl']}" alt="">
+                <p class="title col">{$vo['name']}</p>
+                <div class="rail">
+                    <img src="__HOME_IMG__/rail.png" alt="">
+                </div>
+                <p class="con">{$vo['content']}</p>
+            </div>
+        {/volist}
+    </div>
+    <div class="textBox2">
+        <p class="title">引领时代，驾驭未来</p>
+        <img src="__HOME_IMG__/rail2.png" alt="">
+    </div>
+    <div class="account">
+        <img src="__HOME_IMG__/account01.jpg" alt="">
+        <div class="accleft">
+            <div class="acctop">
+                <a href="aboutUs.html" class="company col">公司简介</a>
+                <a href="aboutUs.html" class="company company1 col">MORE +</a>
+            </div>
+            <p class="con">汽车有限公司成立于XXX年XX月XX日，是本地区唯一的授权销售服务中心和特约售后服务中心。主要从事多种品牌的整车销售、 售后服务、配件供应及信息反馈业务。</p>
+            <p class="con con1">公司秉承 “尊荣无限
+                至上体验”的服务理念，培养更主动贴心的服务意识,追求更周到便捷的服务水准，让每一位车主，都体验到管家般的细致专业，享受到待为贵宾般的尊崇体验公司秉承 “尊荣无限
+                至上体验”的服务理念，培养更主动贴心的服务意识,追求更周到便捷的服务水准，让每一位车主，都体验到管家般的细致专业，享受到待为贵宾般的尊崇体验……</p>
+        </div>
+    </div>
+    <div class="know">
+        <div class="knows">
+            <div class="knowtop">
+                <a href="news.html" class="knowtit col">美容知识</a>
+                <a href="news.html" class="knowtit knowtit1 col">MORE +</a>
+            </div>
+            <ul class="rows">
+                {volist name="news" id="vo"}
+                    <li>
+                        <a href="knowledge?kid={$vo['id']}" class="con">{$vo['title']}</a>
+                        <a href="knowledge?kid={$vo['id']}" class="con conr">{$vo['date']}</a>
+                    </li>
+                {/volist}
+            </ul>
+        </div>
+        <img src="__HOME_IMG__/know.jpg" alt="">
+    </div>
+</section>
+
+{include file="public/footer" }

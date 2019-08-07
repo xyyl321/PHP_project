@@ -72,4 +72,9 @@ class Login extends Controller
             ]);
         }
     }
+
+    public function logout(){
+        Session::clear();
+        return $this->redirect('/admin/login/index');
+    }
 }

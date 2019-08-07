@@ -1,0 +1,45 @@
+<footer>
+    <div class="storeBox">
+        {volist name="addr" id="vo"}
+            <div class="store">
+                <p class="p1 col">{$vo['addnum']}</p>
+                <p class="pnull"></p>
+                <p class="p1 p2">门店地址：{$vo['addr']}</p>
+                <p class="p1 p2">预约电话：
+                    <strong class="col">{$vo['tel']}</strong>
+                </p>
+                <p class="pnull"></p>
+                <p class="p11">营业时间：</p>
+                <p class="p11 p12">周一 ~周五：{$vo['time1']}</p>
+                <p class="p11 p12">周六、周日：{$vo['time2']}</p>
+            </div>
+        {/volist}
+    </div>
+    <div class="diBox">
+        <div class="contact">
+            <div class="img img1"></div>
+            <div class="img img2"></div>
+            <div class="img img3"></div>
+            <div class="img img4"></div>
+            <div class="img img5"></div>
+        </div>
+        <p class="copyright">版权所有 2019-2020 汽车美容工作室 技术支持：起飞页</p>
+    </div>
+</footer>
+<div class="fix">
+    <div class="fixedBox">
+        <div class="fixedLeft">
+            <a href="index.html">
+                <img src="__HOME_IMG__/logo.png" alt="">
+            </a>
+        </div>
+        <div class="fixedRight">
+            <a href="/home/index/index" {$nid ? '' : 'class="col"'}>首页</a>
+            {volist name='nav' id='vo'}
+                <a href="/home/index?id={$vo['id']}" {$vo['id']==$nid ? 'class="col"' : ''}>{$vo['name']}</a>
+            {/volist}
+        </div>
+    </div>
+</div>
+</body>
+</html>

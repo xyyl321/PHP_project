@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产品管理-可视化</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+    <script src="__ADMIN_JS__/echarts.min.js"></script>
+</head>
+<style>
+    ul{
+        width:100%;
+        overflow: hidden;
+    }
+    ul>li{
+        width:500px;
+        height:430px;
+        float:left;
+        margin-right:50px;
+        background: snow;
+    }
+    ul>li:nth-child(2){
+        margin-right:0px;
+    }
+</style>
+<body>
+    <div style="padding:15px">
+        <ul>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+</html>
+
+<script>
+    layui.use(['element'],function(){
+        let {$}=layui;
+        let lis=document.querySelectorAll("ul>li");
+        // 柱状图
+        let barChart=echarts.init(lis[0]);
+        $.ajax({
+            url:'/admin/goodsdetail/barchart',
+            dataType:'json',
+            success:function(res){
+                let {category,catenum}=res;
+                barChart.setOption({
+                    color: ['#3398DB'],
+                    title: {
+                        text: '产品类型销量'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['数量']
+                    },
+                    xAxis: {
+                        data: category
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '数量',
+                        type: 'bar',
+                        data: catenum
+                    }]
+                });
+            }
+        });
+
+        // 饼图
+        let pieChart=echarts.init(lis[1]);
+        $.ajax({
+            url:'/admin/goodsdetail/piechart',
+            dataType:'json',
+            success:function(res){
+                let {category,catenum}=res;
+                pieChart.setOption({
+                    title : {
+                        text: '产品类型销量',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: category
+                    },
+                    color:['#FFB800','#5FB878','#01AAED','#FF5722'],
+                    series : [
+                        {
+                            name: '数量',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:catenum,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+        })
+
+    })
+</script>

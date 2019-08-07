@@ -1,0 +1,41 @@
+{include file="public/header" title="汽车维修—产品中心"}
+
+<link rel="stylesheet" href="__HOME_CSS__/product.css">
+<script src="__HOME_JS__/product.js"></script>
+
+<section>
+    <img src="__HOME_IMG__/aboutimg2.jpg" alt="" class="imgs">
+    <div class="aboutUs">
+        <div class="aboutBox">
+            <span class="sp"></span>
+            <div class="con">
+                <p class="title">产品中心</p>
+                <p class="eng">Products</p>
+            </div>
+            <span class="sp"></span>
+        </div>
+    </div>
+    <div class="proBox">
+        <div class="proTop">
+            {volist name="classes" id="vo"}
+                <span>{$vo['type_name']}</span>
+            {/volist}
+        </div>
+        <div class="proBottom">
+            {volist name="goods" id="vo"}
+                <div class="selectCard">
+                    {volist name="$vo" id="list"}
+                        <a href="/home/index/details?gid={$list['gid']}">
+                            <div class="imgBorder">
+                                <img src="{$list['img1']}" alt="">
+                            </div>
+                            <p class="text">{$list['name']}</p>
+                        </a>
+                    {/volist}
+                </div>
+            {/volist}
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}}

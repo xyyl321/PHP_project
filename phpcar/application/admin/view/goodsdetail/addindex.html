@@ -97,6 +97,7 @@
     </form>
 
     <script>
+        let edits,arrImg=[];
         layui.use(['form', 'layer','upload','layedit'], function () {
             let {form, layer, $,upload,layedit} = layui;
             // 上传图片
@@ -112,6 +113,7 @@
                         layer.msg(msg,{icon:6});
                         $('#img1').val(src);
                         $('#imgurl').attr('src',src);
+                        arrImg.push(src);
                     }else{
                         layer.msg(msg,{icon:5})
                     }
@@ -147,14 +149,19 @@
                 $('#demo2').append('<img src="'+ src +'" alt="" class="layui-upload-img" style="width:30%">')
             }
             //建立编辑器
-            layedit.build('content',{
+            edits=layedit.build('content',{
                 height:200,
+                uploadImage: {
+                    url: '/admin/upload/edits'
+                    ,type: 'post'
+                }
             });
             // 添加
             form.on("submit(*)", function (data) {
                 let formData = data.field;
                 delete formData.file;
                 formData.img2=formData.img2.slice(0,-1);
+                formData.content=layedit.getContent(edits);
                 $.ajax({
                     url: '/admin/goodsdetail/add',
                     type: 'post',
@@ -164,6 +171,17 @@
                         let {code, msg} = res;
                         if(code==200){
                             layer.msg(msg,{icon:1,time:1000});
+                            arrImg.pop();
+                            $.ajax({
+                                url: '/admin/upload/imgdel',
+                                type: 'post',
+                                data:{img:arrImg},
+                                success:function(res){
+                                    if(res.code==200){
+                                        arrImg=[];
+                                    }
+                                }
+                            });
                         }else{
                             layer.msg(msg,{icon:2,time:2000})
                         }

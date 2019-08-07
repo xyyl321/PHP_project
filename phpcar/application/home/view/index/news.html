@@ -1,0 +1,31 @@
+{include file="public/header" title="汽车维修—新闻资讯"}
+
+<link rel="stylesheet" href="__HOME_CSS__/news.css">
+<script src="__HOME_JS__/public.js"></script>
+
+<section>
+    <img src="__HOME_IMG__/aboutimg4.jpg" alt="" class="imgs">
+    <div class="aboutUs">
+        <div class="aboutBox">
+            <span class="sp"></span>
+            <div class="con">
+                <p class="title">养护知识</p>
+                <p class="eng">Knowledgement</p>
+            </div>
+            <span class="sp"></span>
+        </div>
+    </div>
+    <div class="knows">
+        <ul class="rows">
+            {volist name="news" id="vo"}
+                <li>
+                    <a href="javascript:;" class="con">{$vo['title']}</a>
+                    <a href="javascript:;" class="con conr">{$vo['date']}</a>
+                </li>
+            {/volist}
+        </ul>
+    </div>
+    <img src="__HOME_IMG__/aboutimg41.jpg" alt="" class="imgs imgsdi">
+</section>
+
+{include file="public/footer"}
